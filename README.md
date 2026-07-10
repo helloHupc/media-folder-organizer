@@ -128,6 +128,14 @@ Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) be
 - Security reports: see [SECURITY.md](SECURITY.md)
 - Release history: [CHANGELOG.md](CHANGELOG.md)
 
+## Acknowledgements
+
+学AI，上L站
+
+ [linux.do](https://linux.do) 
+
+
+
 ## License
 
 Media Folder Organizer is released under the [MIT License](LICENSE).
