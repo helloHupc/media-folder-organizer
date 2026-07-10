@@ -1,12 +1,15 @@
 <?php
 /**
  * Plugin Name: Media Folder Organizer
+ * Plugin URI: https://github.com/helloHupc/media-folder-organizer
  * Description: Organize WordPress media attachments in unlimited virtual folders with drag-and-drop ordering and media modal filtering.
  * Version: 1.0.3
  * Requires at least: 6.2
  * Requires PHP: 7.4
- * Author: Media Folder Organizer
- * License: GPL-2.0-or-later
+ * Author: hupc
+ * Author URI: https://github.com/helloHupc
+ * License: MIT
+ * License URI: https://opensource.org/license/mit
  * Text Domain: media-folder-organizer
  */
 

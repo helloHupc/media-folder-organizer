@@ -1,74 +1,90 @@
 === Media Folder Organizer ===
-Contributors: media-folder-organizer
+Contributors: hupc
 Tags: media, folders, media library, image organizer, attachment
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.3
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: MIT
+License URI: https://opensource.org/license/mit
 
-Organize media attachments in unlimited virtual folders without changing file paths or URLs.
+Organize WordPress media attachments in unlimited virtual folders without changing file paths or URLs.
 
 == Description ==
 
-Media Folder Organizer adds a hierarchical virtual folder tree to the WordPress Media Library.
+Media Folder Organizer adds a hierarchical virtual folder system to the WordPress Media Library.
 
-Features:
+Key features:
 
-* Unlimited folders and subfolders.
-* Rename and delete folders.
-* Drag folders to reorder them or change their parent.
-* Drag media items into folders.
+* Create unlimited folders and nested subfolders.
+* Rename, delete, reorder, and reparent folders with a custom interface.
+* Drag one or more media items into a folder.
 * Filter the Media Library in grid and list modes.
-* Filter media while inserting images into posts or choosing featured images.
-* Choose a destination folder before uploading.
-* Keep original upload paths and attachment URLs unchanged.
+* Filter media in the Insert Media and Featured Image dialogs.
+* Select a destination folder before uploading.
+* Keep uploaded files, attachment URLs, and existing post content unchanged.
+* Store data with native WordPress taxonomy and term metadata APIs.
 
-The plugin stores folders as a private hierarchical WordPress taxonomy and stores ordering in term metadata. It does not require an external database or service.
+Folders are virtual. The plugin does not move or rename files in `wp-content/uploads` and does not require an external service or custom database table.
+
+The source code is maintained openly at:
+
+https://github.com/helloHupc/media-folder-organizer
 
 == Installation ==
 
-1. Upload the `media-folder-organizer` directory to `/wp-content/plugins/`, or install the ZIP from Plugins > Add New > Upload Plugin.
-2. Activate Media Folder Organizer.
-3. Open Media > Library.
-4. Create folders from the folder sidebar.
+1. Download a release ZIP from the GitHub repository, or create a ZIP whose top-level directory is `media-folder-organizer`.
+2. In WordPress, open Plugins > Add New Plugin > Upload Plugin.
+3. Upload the ZIP, install it, and activate Media Folder Organizer.
+4. Open Media > Library and use the folder sidebar.
 
-See `INSTALLATION-ZH.md` for the complete Chinese installation and integration guide, including prerequisites and how to meet them.
-
-See `INSTALLATION.md` for the English installation, usage, troubleshooting, backup, and removal guide.
+Detailed guides are available in `INSTALLATION.md` and `INSTALLATION-ZH.md` in the project repository.
 
 == Frequently Asked Questions ==
 
-= Are physical files moved? =
+= Are physical media files moved? =
 
-No. Folders are virtual. Existing file paths and URLs do not change.
+No. Folders are virtual taxonomy terms. Existing paths and attachment URLs remain unchanged.
+
+= Can an attachment belong to multiple folders? =
+
+No. Each attachment belongs to at most one Media Folder Organizer folder. Moving it replaces the previous assignment.
+
+= Does selecting a parent folder include its subfolders? =
+
+Yes. Folder filters include attachments assigned to descendant folders.
 
 = What happens when a folder is deleted? =
 
-Its subfolders are deleted and media previously assigned to those folders becomes uncategorized. Media files are not deleted.
+The folder and its descendants are removed. Their media attachments remain in WordPress and become uncategorized.
 
-= Does this need a third-party database? =
+= Does the plugin create custom database tables? =
 
-No. It uses the existing WordPress taxonomy and term metadata tables.
+No. It uses a private hierarchical taxonomy, attachment relationships, and term metadata in the existing WordPress database.
+
+= Where can I report a bug or request a feature? =
+
+Use GitHub Issues:
+
+https://github.com/helloHupc/media-folder-organizer/issues
 
 == Changelog ==
 
 = 1.0.3 =
 
-* Replace browser prompts and confirms with accessible custom dialogs for creating, renaming, and deleting folders.
-* Improve folder drag-and-drop so top-level folders can be dropped onto another folder to become subfolders.
+* Added accessible custom dialogs for creating, renaming, and deleting folders.
+* Fixed folder drag-and-drop so top-level folders can become subfolders.
 
 = 1.0.2 =
 
-* Fix the All media counter on installations where the attachment status count API returns no usable total.
-* Read the media folder from the original Ajax request so selecting a folder actually filters attachments.
+* Fixed the All media counter.
+* Fixed media-modal filtering by reading the folder from the original Ajax request.
 
 = 1.0.1 =
 
-* Fix the media folder filter layout in narrower media modals such as the featured image picker.
-* Give the folder filter a unique element ID to avoid conflicts with WordPress core filters.
+* Fixed folder-filter layout in narrow media dialogs such as the Featured Image picker.
+* Added a unique element ID for the folder filter.
 
 = 1.0.0 =
 
-* Initial release.
+* Initial open-source release.
