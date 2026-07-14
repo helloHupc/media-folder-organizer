@@ -4,7 +4,7 @@ Tags: media, folders, media library, image organizer, attachment
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: MIT
 License URI: https://opensource.org/license/mit
 
@@ -69,6 +69,10 @@ Use GitHub Issues:
 https://github.com/helloHupc/media-folder-organizer/issues
 
 == Changelog ==
+
+= 1.0.4 =
+
+* Automatically refresh the Media Library after moving attachments into a folder.
 
 = 1.0.3 =
 

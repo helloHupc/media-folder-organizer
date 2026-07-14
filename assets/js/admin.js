@@ -12,6 +12,7 @@
 			currentFolder: readFolderFromUrl(),
 			busy: false,
 			filterViews: [],
+			mediaCollections: [],
 			uploaders: [],
 			pendingFolderMove: null,
 			treeSaveTimer: null
@@ -586,26 +587,43 @@
 		$( 'body' ).removeClass( 'mfo-sidebar-open' );
 	}
 
-		function applyFolderToMediaFrame( folderId ) {
-			var frames = [];
-			if ( wp.media && wp.media.frame ) {
-				frames.push( wp.media.frame );
-			}
+	function getMediaCollections() {
+		var collections = state.mediaCollections.slice();
 
-			state.filterViews.forEach( function( view ) {
-				if ( view && view.model ) {
-					view.model.set( 'mfo_folder', folderId );
-				}
-			} );
-
-		frames.forEach( function( frame ) {
+		if ( wp.media && wp.media.frame ) {
 			try {
-				var library = frame.state().get( 'library' );
-				if ( library && library.props ) {
-					library.props.set( 'mfo_folder', folderId );
+				var frameLibrary = wp.media.frame.state().get( 'library' );
+				if ( frameLibrary && collections.indexOf( frameLibrary ) === -1 ) {
+					collections.push( frameLibrary );
 				}
 			} catch ( ignore ) {
 				// Some media frame states do not expose a library collection.
+			}
+		}
+
+		return collections;
+	}
+
+	function applyFolderToMediaFrame( folderId ) {
+		state.filterViews.forEach( function( view ) {
+			if ( view && view.model ) {
+				view.model.set( 'mfo_folder', folderId );
+			}
+		} );
+
+		getMediaCollections().forEach( function( library ) {
+			if ( library && library.props ) {
+				library.props.set( 'mfo_folder', folderId );
+			}
+		} );
+	}
+
+	function refreshMediaLibrary() {
+		getMediaCollections().forEach( function( library ) {
+			if ( library && typeof library._requery === 'function' ) {
+				library._requery( true );
+			} else if ( library && library.props ) {
+				library.props.trigger( 'change' );
 			}
 		} );
 	}
@@ -653,6 +671,8 @@
 			applyFolderToMediaFrame( state.currentFolder );
 			if ( data.isListMode ) {
 				window.location.reload();
+			} else {
+				refreshMediaLibrary();
 			}
 		} ).catch( function( error ) {
 			notify( errorMessage( error ), 'error' );
@@ -770,6 +790,9 @@
 			var originalCreateToolbar = wp.media.view.AttachmentsBrowser.prototype.createToolbar;
 			wp.media.view.AttachmentsBrowser.prototype.createToolbar = function() {
 				originalCreateToolbar.apply( this, arguments );
+				if ( state.mediaCollections.indexOf( this.collection ) === -1 ) {
+					state.mediaCollections.push( this.collection );
+				}
 				var folderFilter = new FolderFilter( {
 					controller: this.controller,
 					model: this.collection.props,
